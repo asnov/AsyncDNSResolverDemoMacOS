@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    var resolver = Resolver.shared
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("apple.com")
+            Text("has the next IPs:")
+            Text(resolver.ips.joined(separator: ", "))
         }
         .padding()
+        .onAppear {
+            Task {
+                await resolver.resolve("apple.com")
+            }
+        }
     }
 }
 
